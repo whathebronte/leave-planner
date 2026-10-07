@@ -1,0 +1,102 @@
+<header class="lp-card header">
+  <div class="title">
+    <h1>Leave Planner</h1>
+    <p class="status" [class.error]="store.sync() === 'error'" aria-live="polite">
+      @if (syncLabel()) {
+        <span class="material-symbols-outlined">{{
+          store.sync() === 'saved'
+            ? 'cloud_done'
+            : store.sync() === 'saving'
+              ? 'cloud_sync'
+              : 'cloud_off'
+        }}</span>
+        {{ syncLabel() }}
+      }
+    </p>
+  </div>
+
+  <div class="actions">
+    @if (auth.isGoogle()) {
+      <button mat-stroked-button type="button" [matMenuTriggerFor]="account" class="account">
+        <span class="material-symbols-outlined">account_circle</span>
+        <span class="name">{{ auth.displayName() }}</span>
+      </button>
+      <mat-menu #account="matMenu">
+        <div class="menu-note">
+          @if (store.isOwnedByMe()) {
+            This planner is saved to your Google account.
+          } @else {
+            Signed in with Google.
+          }
+        </div>
+        <button mat-menu-item type="button" (click)="signOut()">
+          <span class="material-symbols-outlined">logout</span> Sign out
+        </button>
+      </mat-menu>
+    } @else {
+      <button mat-flat-button type="button" (click)="signIn()" [disabled]="!auth.ready()">
+        <span class="material-symbols-outlined">login</span> Sign in with Google
+      </button>
+    }
+
+    <button
+      mat-icon-button
+      type="button"
+      [matMenuTriggerFor]="more"
+      aria-label="More options"
+      matTooltip="More options"
+    >
+      <span class="material-symbols-outlined">more_vert</span>
+    </button>
+    <mat-menu #more="matMenu">
+      <button mat-menu-item type="button" (click)="copyLink()" [disabled]="!store.plannerId()">
+        <span class="material-symbols-outlined">link</span> Copy link to this planner
+      </button>
+      <button mat-menu-item type="button" (click)="openOther()">
+        <span class="material-symbols-outlined">open_in_new</span> Open another planner
+      </button>
+      <button mat-menu-item type="button" (click)="startNew()">
+        <span class="material-symbols-outlined">add</span> Start a new planner
+      </button>
+      <mat-divider />
+      <button
+        mat-menu-item
+        type="button"
+        (click)="exportCalendar()"
+        [disabled]="store.status() !== 'ready'"
+      >
+        <span class="material-symbols-outlined">calendar_add_on</span> Add {{ store.year() }} leave
+        to my calendar (.ics)
+      </button>
+      <button
+        mat-menu-item
+        type="button"
+        (click)="downloadBackup()"
+        [disabled]="store.status() !== 'ready'"
+      >
+        <span class="material-symbols-outlined">download</span> Download backup
+      </button>
+      <button
+        mat-menu-item
+        type="button"
+        (click)="fileInput.click()"
+        [disabled]="store.status() !== 'ready'"
+      >
+        <span class="material-symbols-outlined">upload</span> Restore from backup file
+      </button>
+      @if (store.plannerId(); as id) {
+        <mat-divider />
+        <div class="menu-note mono">Planner ID: {{ id }}</div>
+      }
+    </mat-menu>
+    <input
+      #fileInput
+      type="file"
+      accept="application/json,.json"
+      class="visually-hidden"
+      (change)="restoreFromFile(fileInput)"
+      tabindex="-1"
+      aria-hidden="true"
+    />
+  </div>
+</header>

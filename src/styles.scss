@@ -1,0 +1,61 @@
+@use '@angular/material' as mat;
+
+html {
+  color-scheme: light;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$blue-palette,
+        tertiary: mat.$green-palette,
+      ),
+      typography: Inter,
+      density: 0,
+    )
+  );
+
+  /* Calendar colours, used across components */
+  --lp-holiday: #2563eb;
+  --lp-weekend: #f1f5f9;
+  --lp-weekend-text: #94a3b8;
+  --lp-suggested: #facc15;
+  --lp-leave: #10b981;
+  --lp-leave-dark: #047857;
+  --lp-block: #ef4444;
+  --lp-surface: #ffffff;
+  --lp-bg: #f8fafc;
+  --lp-text: #1e293b;
+  --lp-muted: #64748b;
+  --lp-border: #e2e8f0;
+  --lp-radius: 16px;
+  --lp-shadow: 0 1px 3px rgb(15 23 42 / 0.06), 0 6px 16px rgb(15 23 42 / 0.06);
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--lp-bg);
+  color: var(--lp-text);
+  font-family: Inter, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-symbols-outlined {
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.lp-card {
+  background: var(--lp-surface);
+  border-radius: var(--lp-radius);
+  box-shadow: var(--lp-shadow);
+  padding: 16px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}

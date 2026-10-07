@@ -1,0 +1,46 @@
+<section class="lp-card month" [attr.aria-label]="month().name + ' ' + year()">
+  <header>
+    <h2>{{ month().name }}</h2>
+    @if (leaveCount() > 0) {
+      <span class="count">{{ leaveCount() }} {{ leaveCount() === 1 ? 'day' : 'days' }}</span>
+    }
+  </header>
+  <div class="grid">
+    @for (w of weekdays; track $index) {
+      <div class="weekday" [class.weekend]="$index === 0 || $index === 6" aria-hidden="true">
+        {{ w }}
+      </div>
+    }
+    @for (b of blanks(); track $index) {
+      <div aria-hidden="true"></div>
+    }
+    @for (c of cells(); track c.day.key) {
+      @if (c.editable) {
+        <button
+          type="button"
+          class="day {{ c.kind }}"
+          [class.today]="c.today"
+          [attr.aria-label]="c.label"
+          (click)="tapped.emit(c.day.key)"
+        >
+          <span class="num">{{ c.day.day }}</span>
+          @if (c.tag) {
+            <span class="tag">{{ c.tag }}</span>
+          }
+        </button>
+      } @else {
+        <div
+          class="day {{ c.kind }}"
+          [class.today]="c.today"
+          [attr.aria-label]="c.label"
+          [title]="c.label"
+        >
+          <span class="num">{{ c.day.day }}</span>
+          @if (c.tag) {
+            <span class="tag">{{ c.tag }}</span>
+          }
+        </div>
+      }
+    }
+  </div>
+</section>

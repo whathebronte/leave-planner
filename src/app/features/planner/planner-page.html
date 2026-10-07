@@ -1,0 +1,109 @@
+<div class="page">
+  <app-planner-header />
+
+  @if (auth.error(); as authError) {
+    <div class="lp-card state error" role="alert">{{ authError }}</div>
+  }
+
+  @switch (store.status()) {
+    @case ('loading') {
+      <div class="lp-card state" aria-live="polite">
+        <mat-spinner diameter="36" />
+        <p>Opening your planner...</p>
+      </div>
+    }
+    @case ('waiting') {
+      <div class="lp-card state" role="status">
+        <span class="material-symbols-outlined big-icon">cloud_off</span>
+        <h2>Waiting for a connection</h2>
+        <p>Your planner will open as soon as you are back online. Nothing has been changed.</p>
+      </div>
+    }
+    @case ('not-found') {
+      <div class="lp-card state" role="alert">
+        <span class="material-symbols-outlined big-icon">search_off</span>
+        <h2>No planner at this link</h2>
+        <p>Check the link is complete, or start a fresh planner.</p>
+        <button mat-flat-button type="button" (click)="startNew()">Start a new planner</button>
+      </div>
+    }
+    @case ('private') {
+      <div class="lp-card state" role="alert">
+        <span class="material-symbols-outlined big-icon">lock</span>
+        <h2>This planner is private</h2>
+        @if (auth.isGoogle()) {
+          <p>
+            It belongs to a different Google account. Sign out and sign in with the account that
+            owns it.
+          </p>
+        } @else {
+          <p>It is saved to a Google account. Sign in with that account to open it.</p>
+          <button mat-flat-button type="button" (click)="signIn()">Sign in with Google</button>
+        }
+      </div>
+    }
+    @case ('error') {
+      <div class="lp-card state" role="alert">
+        <span class="material-symbols-outlined big-icon">error</span>
+        <h2>Something went wrong</h2>
+        <p>{{ store.errorMessage() }}</p>
+        <button mat-flat-button type="button" (click)="reload()">Reload</button>
+      </div>
+    }
+    @case ('ready') {
+      @if (recoverable(); as saved) {
+        <div class="lp-card recover" role="alert">
+          <span class="material-symbols-outlined">restore</span>
+          <div>
+            <strong>This planner is empty, but this device has a copy.</strong>
+            <p>
+              {{ countDays(saved.planner.leaves) }} days of leave, saved on
+              {{ formatDate(saved.savedAt) }}.
+            </p>
+          </div>
+          <div class="recover-actions">
+            <button mat-button type="button" (click)="dismissLocal()">Ignore</button>
+            <button mat-flat-button type="button" (click)="restoreLocal()">Restore</button>
+          </div>
+        </div>
+      }
+
+      <div class="overview">
+        <app-balance-card />
+        <section class="lp-card key">
+          <div class="year-row">
+            <h2>Year</h2>
+            <mat-button-toggle-group
+              [value]="store.year()"
+              (change)="store.setYear($event.value)"
+              aria-label="Choose year"
+              hideSingleSelectionIndicator
+            >
+              @for (y of years; track y) {
+                <mat-button-toggle [value]="y">{{ y }}</mat-button-toggle>
+              }
+            </mat-button-toggle-group>
+          </div>
+          <app-legend />
+        </section>
+      </div>
+
+      <app-break-summary />
+
+      <div class="months">
+        @for (m of months(); track m.index) {
+          <app-month-calendar
+            [month]="m"
+            [year]="store.year()"
+            [leaves]="store.leaves()"
+            (tapped)="store.tap($event)"
+          />
+        }
+      </div>
+    }
+  }
+</div>
+
+@if (store.status() === 'ready') {
+  <app-mode-bar />
+}
