@@ -2,7 +2,7 @@
 
 Plan your annual leave around Singapore public holidays. Tap work days to book full or half days of leave, block days you cannot take off, and see how many days off each break gives you.
 
-Live at: https://danilpalma.com/leave-planner-2026/
+Live at: https://danilpalma.com/leave-planner/
 
 ## What it does
 
