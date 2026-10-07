@@ -1,0 +1,124 @@
+:host {
+  display: block;
+}
+
+.month header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--lp-leave-dark);
+  background: #ecfdf5;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--lp-muted);
+  padding-bottom: 4px;
+  &.weekend {
+    color: var(--lp-block);
+  }
+}
+
+.day {
+  all: unset;
+  box-sizing: border-box;
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid var(--lp-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  background: var(--lp-surface);
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform 0.08s ease,
+    background-color 0.15s ease;
+}
+
+button.day {
+  cursor: pointer;
+  &:hover {
+    background-color: #eff6ff;
+  }
+  &:active {
+    transform: scale(0.92);
+  }
+  &:focus-visible {
+    outline: 3px solid var(--lp-holiday);
+    outline-offset: 1px;
+  }
+}
+
+.tag {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.day.holiday {
+  background: var(--lp-holiday);
+  border-color: var(--lp-holiday);
+  color: #fff;
+}
+.day.weekend {
+  background: var(--lp-weekend);
+  border-color: var(--lp-weekend);
+  color: var(--lp-weekend-text);
+}
+.day.suggested,
+button.suggested:hover {
+  background: var(--lp-suggested);
+  border-color: #eab308;
+  color: #422006;
+}
+.day.full,
+button.full:hover {
+  background: var(--lp-leave);
+  border-color: var(--lp-leave-dark);
+  color: #fff;
+  font-weight: 700;
+}
+.day.half,
+button.half:hover {
+  background: linear-gradient(to right, var(--lp-leave) 50%, #fff 50%);
+  border-color: var(--lp-leave);
+  font-weight: 700;
+}
+.day.block,
+button.block:hover {
+  background: var(--lp-block);
+  border-color: #b91c1c;
+  color: #fff;
+  font-weight: 700;
+}
+.day.today {
+  box-shadow: 0 0 0 2px var(--lp-text);
+}

@@ -1,0 +1,78 @@
+rules_version = '2';
+
+// Who can see or change what.
+//
+// planners/{id}
+//   * Planner with no owner (opened by link only): anyone who has the link can open and edit it.
+//   * Planner with an owner (saved to a Google account): only that Google account.
+//   * A planner can be claimed by a Google account once, and never handed to someone else.
+//   * Nobody can list all planners, and nobody can delete one.
+// users/{uid}
+//   * Only you can read or write the note that says which planner is yours.
+//
+// These rules never expire (the old "test mode" rules expire after 30 days and lock the app).
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isGoogle() {
+      return signedIn() && request.auth.token.firebase.sign_in_provider == 'google.com';
+    }
+
+    function ownerOf(data) {
+      return data.get('ownerUid', null);
+    }
+
+    function validPlanner(data) {
+      return data.keys().hasOnly(['schemaVersion', 'ownerUid', 'totals', 'leaves', 'updatedAt', 'total', 'updated'])
+        && data.get('leaves', {}) is map
+        && data.get('leaves', {}).size() <= 2000
+        && data.get('totals', {}) is map
+        && data.get('totals', {}).size() <= 50
+        && (ownerOf(data) == null || ownerOf(data) is string);
+    }
+
+    function canOpen(data) {
+      return ownerOf(data) == null || ownerOf(data) == request.auth.uid;
+    }
+
+    match /planners/{plannerId} {
+      allow get: if signedIn() && (resource == null || canOpen(resource.data));
+      allow list: if false;
+
+      allow create: if signedIn()
+        && validPlanner(request.resource.data)
+        && (ownerOf(request.resource.data) == null
+            || (isGoogle() && ownerOf(request.resource.data) == request.auth.uid));
+
+      allow update: if signedIn()
+        && validPlanner(request.resource.data)
+        && (
+          // Owned planner: only the owner, and the owner cannot change.
+          (ownerOf(resource.data) != null
+            && ownerOf(resource.data) == request.auth.uid
+            && ownerOf(request.resource.data) == request.auth.uid)
+          ||
+          // Link-only planner: anyone with the link may edit it, or claim it for their own Google account.
+          (ownerOf(resource.data) == null
+            && (ownerOf(request.resource.data) == null
+                || (isGoogle() && ownerOf(request.resource.data) == request.auth.uid)))
+        );
+
+      allow delete: if false;
+    }
+
+    match /users/{uid} {
+      allow get: if signedIn() && request.auth.uid == uid;
+      allow create, update: if isGoogle()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['plannerId'])
+        && request.resource.data.plannerId is string;
+      allow list, delete: if false;
+    }
+  }
+}
