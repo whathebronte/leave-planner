@@ -15,13 +15,8 @@ import { PlannerStore } from '../../../services/planner-store.service';
       <div class="row">
         <h2>Leave left in {{ store.year() }}</h2>
         @if (!editing()) {
-          <button
-            mat-button
-            type="button"
-            (click)="startEdit()"
-            aria-label="Change leave allowance"
-          >
-            <span class="material-symbols-outlined">edit</span> Edit
+          <button mat-button type="button" (click)="startEdit()" aria-label="Edit leave allowance">
+            <span class="material-symbols-outlined" aria-hidden="true">edit</span> Edit
           </button>
         }
       </div>
@@ -79,6 +74,8 @@ import { PlannerStore } from '../../../services/planner-store.service';
       color: var(--lp-leave);
       margin: 4px 0 0;
       line-height: 1.1;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
     }
     .big.low {
       color: var(--lp-block);

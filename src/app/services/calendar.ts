@@ -30,7 +30,7 @@ export interface CalendarDay {
 export interface CalendarMonth {
   index: number;
   name: string;
-  /** Empty slots before day 1 so the 1st lands under the right weekday (Sunday first). */
+  /** Empty slots before day 1 so the 1st lands under the right weekday (Monday first). */
   leadingBlanks: number;
   days: CalendarDay[];
 }
@@ -79,7 +79,9 @@ export function buildYear(year: number): CalendarMonth[] {
         suggested: suggestions.has(key),
       });
     }
-    return { index, name, leadingBlanks: new Date(Date.UTC(year, index, 1)).getUTCDay(), days };
+    // getUTCDay() counts from Sunday (0); shift it so Monday is 0 and Sunday is 6.
+    const leadingBlanks = (new Date(Date.UTC(year, index, 1)).getUTCDay() + 6) % 7;
+    return { index, name, leadingBlanks, days };
   });
 }
 

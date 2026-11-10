@@ -19,7 +19,8 @@ h2 {
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--lp-leave-dark);
-  background: #ecfdf5;
+  background: var(--lp-leave-tint);
+  font-variant-numeric: tabular-nums;
   padding: 2px 8px;
   border-radius: 999px;
 }
@@ -52,6 +53,7 @@ h2 {
   align-items: center;
   justify-content: center;
   font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
   background: var(--lp-surface);
   user-select: none;
   touch-action: manipulation;
@@ -64,7 +66,8 @@ h2 {
 button.day {
   cursor: pointer;
   &:hover {
-    background-color: #eff6ff;
+    background-color: var(--lp-holiday-soft);
+    border-color: #bfdbfe;
   }
   &:active {
     transform: scale(0.92);
@@ -96,8 +99,8 @@ button.day {
 .day.suggested,
 button.suggested:hover {
   background: var(--lp-suggested);
-  border-color: #eab308;
-  color: #422006;
+  border-color: var(--lp-suggested-border);
+  color: var(--lp-suggested-text);
 }
 .day.full,
 button.full:hover {
@@ -108,17 +111,21 @@ button.full:hover {
 }
 .day.half,
 button.half:hover {
-  background: linear-gradient(to right, var(--lp-leave) 50%, #fff 50%);
+  /* Lighter fill than a full day, so dark text reads on both halves. */
+  background: linear-gradient(to right, var(--lp-leave-soft) 50%, var(--lp-surface) 50%);
   border-color: var(--lp-leave);
+  color: var(--lp-on-leave-soft);
   font-weight: 700;
 }
 .day.block,
 button.block:hover {
   background: var(--lp-block);
-  border-color: #b91c1c;
+  border-color: var(--lp-block-dark);
   color: #fff;
   font-weight: 700;
 }
 .day.today {
-  box-shadow: 0 0 0 2px var(--lp-text);
+  box-shadow:
+    0 0 0 1px var(--lp-surface),
+    0 0 0 3px var(--lp-text);
 }

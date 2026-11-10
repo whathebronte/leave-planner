@@ -14,14 +14,14 @@
     }
     @case ('waiting') {
       <div class="lp-card state" role="status">
-        <span class="material-symbols-outlined big-icon">cloud_off</span>
+        <span class="material-symbols-outlined big-icon" aria-hidden="true">cloud_off</span>
         <h2>Waiting for a connection</h2>
         <p>Your planner will open as soon as you are back online. Nothing has been changed.</p>
       </div>
     }
     @case ('not-found') {
       <div class="lp-card state" role="alert">
-        <span class="material-symbols-outlined big-icon">search_off</span>
+        <span class="material-symbols-outlined big-icon" aria-hidden="true">search_off</span>
         <h2>No planner at this link</h2>
         <p>Check the link is complete, or start a fresh planner.</p>
         <button mat-flat-button type="button" (click)="startNew()">Start a new planner</button>
@@ -29,7 +29,7 @@
     }
     @case ('private') {
       <div class="lp-card state" role="alert">
-        <span class="material-symbols-outlined big-icon">lock</span>
+        <span class="material-symbols-outlined big-icon" aria-hidden="true">lock</span>
         <h2>This planner is private</h2>
         @if (auth.isGoogle()) {
           <p>
@@ -44,7 +44,7 @@
     }
     @case ('error') {
       <div class="lp-card state" role="alert">
-        <span class="material-symbols-outlined big-icon">error</span>
+        <span class="material-symbols-outlined big-icon" aria-hidden="true">error</span>
         <h2>Something went wrong</h2>
         <p>{{ store.errorMessage() }}</p>
         <button mat-flat-button type="button" (click)="reload()">Reload</button>
@@ -53,7 +53,7 @@
     @case ('ready') {
       @if (recoverable(); as saved) {
         <div class="lp-card recover" role="alert">
-          <span class="material-symbols-outlined">restore</span>
+          <span class="material-symbols-outlined" aria-hidden="true">restore</span>
           <div>
             <strong>This planner is empty, but this device has a copy.</strong>
             <p>

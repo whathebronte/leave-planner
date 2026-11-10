@@ -13,14 +13,23 @@ html {
     )
   );
 
-  /* Calendar colours, used across components */
+  /* Calendar colours, used across components.
+     Every fill that carries white text clears 4.5:1 contrast. */
   --lp-holiday: #2563eb;
+  --lp-holiday-soft: #eff6ff;
   --lp-weekend: #f1f5f9;
-  --lp-weekend-text: #94a3b8;
+  --lp-weekend-text: #5f6f86;
   --lp-suggested: #facc15;
-  --lp-leave: #10b981;
-  --lp-leave-dark: #047857;
-  --lp-block: #ef4444;
+  --lp-suggested-border: #eab308;
+  --lp-suggested-text: #422006;
+  --lp-leave: #047857;
+  --lp-leave-dark: #065f46;
+  --lp-leave-soft: #a7f3d0;
+  --lp-leave-tint: #ecfdf5;
+  --lp-on-leave-soft: #064e3b;
+  --lp-block: #dc2626;
+  --lp-block-dark: #b91c1c;
+  --lp-block-tint: #fef2f2;
   --lp-surface: #ffffff;
   --lp-bg: #f8fafc;
   --lp-text: #1e293b;
@@ -28,6 +37,25 @@ html {
   --lp-border: #e2e8f0;
   --lp-radius: 16px;
   --lp-shadow: 0 1px 3px rgb(15 23 42 / 0.06), 0 6px 16px rgb(15 23 42 / 0.06);
+
+  /* Make Material buttons, toggles, menus and panels use the app's palette
+     instead of Material's own indigo and lilac. */
+  @include mat.theme-overrides(
+    (
+      primary: #2563eb,
+      on-primary: #ffffff,
+      surface: #ffffff,
+      surface-tint: transparent,
+      surface-container: #ffffff,
+      surface-container-high: #ffffff,
+      secondary-container: #dbeafe,
+      on-secondary-container: #1e3a8a,
+      on-surface: #1e293b,
+      on-surface-variant: #64748b,
+      outline: #cbd5e1,
+      outline-variant: #e2e8f0,
+    )
+  );
 }
 
 html,
@@ -38,6 +66,11 @@ body {
   color: var(--lp-text);
   font-family: Inter, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #bfdbfe;
+  color: var(--lp-text);
 }
 
 .material-symbols-outlined {

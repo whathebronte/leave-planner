@@ -26,7 +26,7 @@ export class MonthCalendar {
   readonly leaves = input.required<Record<DateKey, DayValue>>();
   readonly tapped = output<DateKey>();
 
-  protected readonly weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  protected readonly weekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
   protected readonly blanks = computed(() => Array.from({ length: this.month().leadingBlanks }));
 
   protected readonly cells = computed<Cell[]>(() => {
