@@ -48,7 +48,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       background: var(--lp-leave);
     }
     .half {
-      background: linear-gradient(to right, var(--lp-leave-soft) 50%, var(--lp-surface) 50%);
+      background: linear-gradient(to right, var(--lp-leave) 50%, var(--lp-surface) 50%);
       border-color: var(--lp-leave);
     }
     .block {

@@ -14,7 +14,7 @@ html {
   );
 
   /* Calendar colours, used across components.
-     Every fill that carries white text clears 4.5:1 contrast. */
+     Text on every fill clears 4.5:1 contrast. */
   --lp-holiday: #2563eb;
   --lp-holiday-soft: #eff6ff;
   --lp-weekend: #f1f5f9;
@@ -22,11 +22,11 @@ html {
   --lp-suggested: #facc15;
   --lp-suggested-border: #eab308;
   --lp-suggested-text: #422006;
-  --lp-leave: #047857;
-  --lp-leave-dark: #065f46;
-  --lp-leave-soft: #a7f3d0;
+  --lp-leave: #10b981;
+  --lp-leave-dark: #047857;
   --lp-leave-tint: #ecfdf5;
-  --lp-on-leave-soft: #064e3b;
+  /* Text on the bright leave green: dark, because white on it is hard to read. */
+  --lp-on-leave: #022c22;
   --lp-block: #dc2626;
   --lp-block-dark: #b91c1c;
   --lp-block-tint: #fef2f2;
