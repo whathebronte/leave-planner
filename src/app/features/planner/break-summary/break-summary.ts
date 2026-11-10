@@ -77,6 +77,8 @@ import { findBreaks, formatRange } from '../../../services/calendar';
     }
     .range {
       font-weight: 600;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
     }
     .detail {
       color: var(--lp-muted);

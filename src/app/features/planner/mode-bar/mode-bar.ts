@@ -18,7 +18,7 @@ import { Mode } from '../../../models/planner.model';
           [attr.aria-pressed]="store.mode() === m.id"
           (click)="store.mode.set(m.id)"
         >
-          <span class="icon material-symbols-outlined">{{ m.icon }}</span>
+          <span class="icon material-symbols-outlined" aria-hidden="true">{{ m.icon }}</span>
           <span class="text">
             <strong>{{ m.title }}</strong>
             <small>{{ m.hint }}</small>
@@ -34,7 +34,7 @@ import { Mode } from '../../../models/planner.model';
         aria-label="Undo last tap"
         matTooltip="Undo last tap"
       >
-        <span class="material-symbols-outlined">undo</span>
+        <span class="material-symbols-outlined" aria-hidden="true">undo</span>
       </button>
     </nav>
   `,
@@ -51,7 +51,7 @@ import { Mode } from '../../../models/planner.model';
       background: rgb(255 255 255 / 0.95);
       backdrop-filter: blur(8px);
       border-top: 1px solid var(--lp-border);
-      box-shadow: 0 -4px 20px rgb(0 0 0 / 0.06);
+      box-shadow: 0 -4px 20px rgb(15 23 42 / 0.06);
     }
     .mode {
       all: unset;
@@ -65,23 +65,30 @@ import { Mode } from '../../../models/planner.model';
       padding: 8px 12px;
       border-radius: 14px;
       border: 2px solid transparent;
-      opacity: 0.55;
-      filter: grayscale(1);
-      transition: all 0.15s ease;
+      transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+    }
+    .mode:hover {
+      background: var(--lp-bg);
     }
     .mode:focus-visible {
       outline: 3px solid var(--lp-holiday);
+      outline-offset: 2px;
     }
-    .mode.active {
-      opacity: 1;
-      filter: none;
+    .mode:not(.active) .icon {
+      background: var(--lp-weekend);
+      color: var(--lp-muted);
+    }
+    .mode:not(.active) strong {
+      color: var(--lp-muted);
     }
     .mode.leave.active {
-      background: #f0fdf4;
+      background: var(--lp-leave-tint);
       border-color: var(--lp-leave);
     }
     .mode.block.active {
-      background: #fef2f2;
+      background: var(--lp-block-tint);
       border-color: var(--lp-block);
     }
     .icon {
@@ -98,7 +105,7 @@ import { Mode } from '../../../models/planner.model';
     }
     .block .icon {
       background: #fee2e2;
-      color: #b91c1c;
+      color: var(--lp-block-dark);
     }
     .text {
       display: flex;
