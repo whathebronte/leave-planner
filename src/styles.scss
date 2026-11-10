@@ -68,6 +68,19 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/*
+ * Safari (iPhone) fix for the "Your breaks" panel. Material folds a closed panel by
+ * shrinking a grid row to 0, but Safari still sizes that row to the hidden list,
+ * leaving a large blank gap. Clipping the content lets the row shrink, and a closed
+ * panel's content area is pinned to zero height as a backstop.
+ */
+app-break-summary .mat-expansion-panel-content {
+  overflow: hidden;
+}
+app-break-summary .mat-expansion-panel:not(.mat-expanded) > .mat-expansion-panel-content-wrapper {
+  height: 0;
+}
+
 ::selection {
   background: #bfdbfe;
   color: var(--lp-text);

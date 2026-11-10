@@ -56,12 +56,16 @@ interface Entry {
     .summary {
       border-radius: var(--lp-radius) !important;
       box-shadow: var(--lp-shadow) !important;
+      /* The header holds two lines (title and summary), so let it grow instead of
+         squeezing them into Material's fixed 48px / 64px row. */
+      --mat-expansion-header-collapsed-state-height: auto;
+      --mat-expansion-header-expanded-state-height: auto;
     }
     .head {
       display: flex;
       flex-direction: column;
       gap: 2px;
-      padding: 8px 0;
+      padding: 14px 0;
     }
     .head small {
       color: var(--lp-muted);
