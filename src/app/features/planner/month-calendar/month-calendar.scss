@@ -106,14 +106,15 @@ button.suggested:hover {
 button.full:hover {
   background: var(--lp-leave);
   border-color: var(--lp-leave-dark);
-  color: var(--lp-on-leave);
+  color: #fff;
   font-weight: 700;
 }
 .day.half,
 button.half:hover {
   background: linear-gradient(to right, var(--lp-leave) 50%, var(--lp-surface) 50%);
   border-color: var(--lp-leave);
-  color: var(--lp-on-leave);
+  /* Dark text: the date sits across both the green and the white half. */
+  color: var(--lp-text);
   font-weight: 700;
 }
 .day.block,

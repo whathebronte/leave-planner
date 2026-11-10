@@ -14,7 +14,7 @@ html {
   );
 
   /* Calendar colours, used across components.
-     Text on every fill clears 4.5:1 contrast. */
+     Full leave days keep white text to match holidays and blocked days. */
   --lp-holiday: #2563eb;
   --lp-holiday-soft: #eff6ff;
   --lp-weekend: #f1f5f9;
@@ -25,8 +25,6 @@ html {
   --lp-leave: #10b981;
   --lp-leave-dark: #047857;
   --lp-leave-tint: #ecfdf5;
-  /* Text on the bright leave green: dark, because white on it is hard to read. */
-  --lp-on-leave: #022c22;
   --lp-block: #dc2626;
   --lp-block-dark: #b91c1c;
   --lp-block-tint: #fef2f2;
