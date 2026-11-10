@@ -14,7 +14,7 @@ html {
   );
 
   /* Calendar colours, used across components.
-     Every fill that carries white text clears 4.5:1 contrast. */
+     Full leave days keep white text to match holidays and blocked days. */
   --lp-holiday: #2563eb;
   --lp-holiday-soft: #eff6ff;
   --lp-weekend: #f1f5f9;
@@ -22,11 +22,9 @@ html {
   --lp-suggested: #facc15;
   --lp-suggested-border: #eab308;
   --lp-suggested-text: #422006;
-  --lp-leave: #047857;
-  --lp-leave-dark: #065f46;
-  --lp-leave-soft: #a7f3d0;
+  --lp-leave: #059669; /* same 600 weight as the holiday blue and blocked red */
+  --lp-leave-dark: #047857;
   --lp-leave-tint: #ecfdf5;
-  --lp-on-leave-soft: #064e3b;
   --lp-block: #dc2626;
   --lp-block-dark: #b91c1c;
   --lp-block-tint: #fef2f2;
@@ -66,6 +64,19 @@ body {
   color: var(--lp-text);
   font-family: Inter, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Safari (iPhone) fix for the "Your breaks" panel. Material folds a closed panel by
+ * shrinking a grid row to 0, but Safari still sizes that row to the hidden list,
+ * leaving a large blank gap. Clipping the content lets the row shrink, and a closed
+ * panel's content area is pinned to zero height as a backstop.
+ */
+app-break-summary .mat-expansion-panel-content {
+  overflow: hidden;
+}
+app-break-summary .mat-expansion-panel:not(.mat-expanded) > .mat-expansion-panel-content-wrapper {
+  height: 0;
 }
 
 ::selection {

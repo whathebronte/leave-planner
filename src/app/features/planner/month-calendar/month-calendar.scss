@@ -111,10 +111,10 @@ button.full:hover {
 }
 .day.half,
 button.half:hover {
-  /* Lighter fill than a full day, so dark text reads on both halves. */
-  background: linear-gradient(to right, var(--lp-leave-soft) 50%, var(--lp-surface) 50%);
+  background: linear-gradient(to right, var(--lp-leave) 50%, var(--lp-surface) 50%);
   border-color: var(--lp-leave);
-  color: var(--lp-on-leave-soft);
+  /* Dark text: the date sits across both the green and the white half. */
+  color: var(--lp-text);
   font-weight: 700;
 }
 .day.block,

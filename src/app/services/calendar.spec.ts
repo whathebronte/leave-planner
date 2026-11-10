@@ -4,6 +4,7 @@ import {
   buildYear,
   costOfChange,
   findBreaks,
+  findHalfDays,
   formatRange,
   leaveUsed,
   nextValue,
@@ -78,6 +79,19 @@ describe('calendar', () => {
       ['2026-01-01', '2026-01-04', 4],
       ['2026-01-09', '2026-01-11', 3],
     ]);
+  });
+
+  it('lists half days for the year in date order', () => {
+    const leaves = {
+      '2026-11-20': 0.5,
+      '2026-01-07': 0.5,
+      '2026-01-09': 1,
+      '2026-03-03': -1,
+      '2027-02-09': 0.5,
+    } as const;
+    expect(findHalfDays(leaves, 2026)).toEqual(['2026-01-07', '2026-11-20']);
+    expect(findHalfDays(leaves, 2027)).toEqual(['2027-02-09']);
+    expect(findHalfDays({}, 2026)).toEqual([]);
   });
 
   it('formats date ranges in plain words', () => {
