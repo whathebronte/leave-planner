@@ -149,6 +149,16 @@ export function findBreaks(leaves: Record<DateKey, DayValue>, year: number): Bre
   return breaks;
 }
 
+/**
+ * Half days of leave booked in the given year, in date order.
+ * They are not full days off, so findBreaks leaves them out; the summary lists them on their own.
+ */
+export function findHalfDays(leaves: Record<DateKey, DayValue>, year: number): DateKey[] {
+  return Object.keys(leaves)
+    .filter((k) => k.startsWith(`${year}-`) && leaves[k] === 0.5)
+    .sort();
+}
+
 /** "28 May" or "23 to 31 May" or "30 Dec to 3 Jan". */
 export function formatRange(start: DateKey, end: DateKey): string {
   const s = keyToDate(start);
