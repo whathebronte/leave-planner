@@ -7,7 +7,7 @@
   </header>
   <div class="grid">
     @for (w of weekdays; track $index) {
-      <div class="weekday" [class.weekend]="$index === 0 || $index === 6" aria-hidden="true">
+      <div class="weekday" [class.weekend]="$index >= 5" aria-hidden="true">
         {{ w }}
       </div>
     }

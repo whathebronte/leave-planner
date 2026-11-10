@@ -14,8 +14,10 @@ describe('calendar', () => {
     const months = buildYear(2026);
     expect(months).toHaveLength(12);
     expect(months[1].days).toHaveLength(28);
-    expect(months[0].leadingBlanks).toBe(4); // 1 Jan 2026 is a Thursday
-    expect(buildYear(2027)[0].leadingBlanks).toBe(5); // 1 Jan 2027 is a Friday
+    expect(months[0].leadingBlanks).toBe(3); // 1 Jan 2026 is a Thursday (Monday first)
+    expect(buildYear(2027)[0].leadingBlanks).toBe(4); // 1 Jan 2027 is a Friday
+    expect(buildYear(2027)[1].leadingBlanks).toBe(0); // 1 Feb 2027 is a Monday
+    expect(buildYear(2026)[2].leadingBlanks).toBe(6); // 1 Mar 2026 is a Sunday
   });
 
   it('marks weekends, holidays and suggestions', () => {
